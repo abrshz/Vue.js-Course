@@ -18,9 +18,18 @@
     </header>
     <section id="events">
       <h2>Events in Action</h2>
-      <button v-on:click="increment()" >Add</button>
-      <button v-on:click="decrement()" >Remove</button>
+      <button v-on:click="increment" >Add</button>
+      <button v-on:click="decrement" >Remove</button>
+      <p v-once>Starting counters: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
+      <input type="text" v-on:input="setName" placeholder="Your name" v-on:keyup="confirmInput">
+      <p>Your name: {{confirmedName}}</p>
+      <form v-on:submit.prevent="submitForm">
+        <input type="text" placeholder="Email">
+        <br>
+        <br>
+        <button>Sign in</button>
+      </form>
     </section>
     <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js"></script>
   </body>
