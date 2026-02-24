@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,16 +18,21 @@
     </header>
     <section id="events">
       <h2>Events in Action</h2>
-      <button v-on:click="increment" >Add</button>
-      <button v-on:click="decrement" >Remove</button>
+      <button v-on:click="increment">Add</button>
+      <button v-on:click="decrement">Remove</button>
       <p v-once>Starting counters: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
-      <input type="text" v-on:input="setName" placeholder="Your name" v-on:keyup="confirmInput">
-      <p>Your name: {{confirmedName}}</p>
+      <input
+        type="text"
+        v-model="name"
+        placeholder="Your name"
+      />
+      <br /><br />
+      <button v-on:click="resetName">Reset</button>
+      <p>Your name: {{name}}</p>
+      <br /><br />
       <form v-on:submit.prevent="submitForm">
-        <input type="text" placeholder="Email">
-        <br>
-        <br>
+        <input type="text" placeholder="Email" />
         <button>Sign in</button>
       </form>
     </section>
