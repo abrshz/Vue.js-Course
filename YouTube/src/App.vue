@@ -51,6 +51,7 @@ header {
 <script setup>
 import { ref } from 'vue'
 import Greeting from './components/Greeting.vue'
+import Footer from './components/Footer.vue'
 
 // Reactive data
 const count = ref(0)
@@ -81,9 +82,10 @@ const reset = () => {
     <button @click="decrement">Decrement ➖</button>
     <button @click="reset">Reset 🔄</button>
   </div>
-  <footer>
+  <Footer /> 
+  <!-- <footer>
     <p>&copy; {{ year }} </p>
-  </footer>
+  </footer> -->
 </template>
 
 <style scoped>
