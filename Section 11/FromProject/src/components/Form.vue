@@ -1,8 +1,18 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" v-model="userName" />
+      <input
+        id="user-name"
+        name="user-name"
+        type="text"
+        v-model="userName"
+        @blur="validateInput"
+      />
+      <p v-if="userNameValidity === 'invalid'">Please enter a valid name!</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
@@ -31,7 +41,7 @@
           type="checkbox"
           v-model="interest"
         />
-        <label for="interest-news" value="news" >News</label>
+        <label for="interest-news" value="news">News</label>
       </div>
       <div>
         <input
@@ -49,27 +59,53 @@
           type="checkbox"
           v-model="interest"
         />
-        <label for="interest-nothing" value="nothing" >Nothing</label>
+        <label for="interest-nothing" value="nothing">Nothing</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" value="video" type="radio" v-model="how" />
+        <input
+          id="how-video"
+          name="how"
+          value="video"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" value="blogs" type="radio" v-model="how" />
+        <input
+          id="how-blogs"
+          name="how"
+          value="blogs"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" value="other" type="radio" v-model="how" />
+        <input
+          id="how-other"
+          name="how"
+          value="other"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-other">Other</label>
       </div>
     </div>
     <div class="form-control">
-        <input type="checkbox" id="confirm-items" name="confirm-terms" v-model="confirm" />
-        <label for="confirm-terms">Agree to terms of use?</label>
+      <rating-control v-model="rating"></rating-control>
+    </div>
+    <div class="form-control">
+      <input
+        type="checkbox"
+        id="confirm-items"
+        name="confirm-terms"
+        v-model="confirm"
+      />
+      <label for="confirm-terms">Agree to terms of use?</label>
     </div>
     <div>
       <button>Save Data</button>
@@ -79,19 +115,42 @@
 
 <script setup>
 import { ref } from "vue";
+import RatingControl from "./RatingControl.vue";
 
 const userName = ref("");
 const userAge = ref(null);
 const userReferrer = ref("");
 const interest = ref([]);
 const how = ref([]);
-const confirm = ref(false)
+const confirm = ref(false);
+const userNameValidity = ref("pending");
+const rating = ref(null);
 
 const submitForm = () => {
   console.log("Username: " + userName.value);
+  console.log("User Age: " + userAge.value);
+  console.log("Referrer: " + userReferrer.value);
+  console.log("Interests: " + interest.value);
+  console.log("How: " + how.value);
+  console.log("Rating: " + rating.value);
+  console.log("Confirmed: " + confirm.value);
+
   userName.value = "";
-  console.log("Userage: " + userAge.value);
   userAge.value = null;
+  userReferrer.value = "";
+  interest.value = [];
+  how.value = "";
+  rating.value = null;
+  confirm.value = false;
+  userNameValidity.value = "pending";
+};
+
+const validateInput = () => {
+  if (userName.value.trim() === "") {
+    userNameValidity.value = "invalid";
+  } else {
+    userNameValidity.value = "valid";
+  }
 };
 </script>
 
@@ -107,6 +166,14 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  color: red;
 }
 
 label {
